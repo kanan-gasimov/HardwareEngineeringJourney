@@ -1,0 +1,27 @@
+Digital Design and Computer Architecture, Harris, David; Harris, Sara 
+Day 1
+
+Chapter 1
+The driver produces a LOW (0) output in the range of 0 to V OL or a HIGH (1) output in the range of V OH to V DD . If the receiver gets an input in the range of 0 to V IL , it will consider the input to be LOW. If the receiver gets an input in the range of V IH to V DD , it will consider the input to be HIGH. If, for some reason such as noise or faulty components, the receiver’s input should fall in the forbidden zone between V IL and V IH , the behavior of the gate is unpredictable. V OH , V OL , V IH , and V IL are called the output and input high and low logic levels.
+
+Noice margins:
+NM(L) = V (IL) - V (OL)
+NM(H) = V (OH) - V (IH)
+
+
+---------------------------------------------------------------------------------------------------------
+## Topics covered
+- Binary numbers
+- Hexadecimal
+- Logic gates
+- CMOS overview
+- Noise margins
+
+## Key ideas
+- Digital circuits operate using discrete logic levels.
+- CMOS uses complementary nMOS and pMOS transistors, which helps to balance entries of 0's for pMOS and 1's for nMOS.
+- Hexadecimal is a compact representation of binary values.
+
+## Things I found difficult
+- Noise margins
+- Transmission gates

@@ -1,0 +1,12 @@
+Example 1.18 
+Consider the inverter circuit of Figure 1.24. V (O1) is the output voltage of inverter I1, and V (I2) is the input voltage of inverter I2. Both inverters have the following characteristics: V DD 5V, V (IL) 1.35V, V (IH) 3.15V, V (OL) 0.33V, and V (OH) 3.84V. What are the inverter low and high noise margins? Can the circuit tolerate 1V of noise between V (O1) and V (I2) ?
+
+Solution: The inverter noise margins are: NM(L) V(IL) V(OL) (1.35 V 0.33 V) 1.02V, NM(H) V(OH) V(IH) (3.84 V 3.15 V) 0.69V. The circuit can tol- erate 1V of noise when the output is LOW ( NM(L) 1.02V) but not when the output is HIGH ( NM(H) 0.69V). For example, suppose the driver, I1, outputs its worst-case HIGH value, V(O1) V(OH) 3.84V. If noise causes the voltage to droop by 1V before reaching the input of the receiver, V(I2) (3.84 V 1V) 2.84V. This is less than the acceptable input HIGH value, V(IH) 3.15V, so the receiver may not sense a proper HIGH input.
+
+
+
+Example 1.23 
+POWER CONSUMPTION 
+A particular cell phone has a 6 watt-hour (W-hr) battery and operates at 1.2V. Suppose that, when it is in use, the cell phone operates at 300 MHz and the average amount of capacitance in the chip switching at any given time is 10 nF (10 8 Farads). When in use, it also broadcasts 3W of power out of its antenna. When the phone is not in use, the dynamic power drops to almost zero because the signal processing is turned off. But the phone also draws 40mA of quiescent current whether it is in use or not. Determine the battery life of the phone (a) if it is not being used, and (b) if it is being used continuously.
+Solution: The static power is P static (0.040 A)(1.2 V) 48mW. If the phone is not being used, this is the only power consumption, so the battery life is (6Whr)/(0.048 W) 125 hours (about 5 days). If the phone is being used, the dynamic power is P dynamic (0.5)(10 8 F)(1.2 V) 2 (3 10 8 Hz) 2.16 W. Together with the static and broadcast power, the total active power is 2.16W 0.048 W 3W 5.2W, so the battery life is 6W-hr/5.2W 1.15 hours. This example somewhat oversimplifies the actual operation of a cell phone, but it illustrates the key ideas of power consumption.
+
