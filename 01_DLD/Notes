@@ -25,3 +25,27 @@ NM(H) = V (OH) - V (IH)
 ## Things I found difficult
 - Noise margins
 - Transmission gates
+
+---------------------------------------------------------------------------------------------------------
+Day 2
+
+Chapter 2
+In CMOS, NANDs & NORs are more efficient than AND & OR
+
+Bubble pushing
+Begin at the output of the circuit and work toward the inputs. Push any bubbles on the final output back toward the inputs so that you can read an equation in terms of the output (for example, Y ) instead of the complement of the output . ( Y ) Working backward, draw each gate in a form so that bubbles cancel. If the current gate has an input bubble, draw the preceding gate with an output bubble. If the current gate does not have an input bubble, draw the preceding gate without an output bubble.
+
+When X appears in a truth table, it indicates that the value of the variable in the truth table is unimportant. When Xappears in a circuit, it means that the circuit node has an unknown or illegal value. This commonly happens if it is being driven to both 0 and 1 at the same time.
+
+The tristate buffer, shown in Figure2.40, has three possible output states: HIGH (1), LOW (0), and floating (Z). The tristate buffer has an input, A, an output, Y, and an enable, E. When the enable is TRUE, the tristate buffer acts as a simple buffer, transferring the input value to the output. When the enable is FALSE, the output is allowed to float (Z).
+
+Timing
+We measure delay from the 50% point of the input signal, A, to the 50% point ofthe output signal, Y. The 50% point is the point at which the signalis half-way (50%) between its LOW and HIGH values as it transitions.
+
+Combinational logic is characterized by its propagation delay and contamination delay. The propagation delay, t pd , is the maximum time from when an input changes until the output or outputs reach their final value. The contamination delay, t cd , is the minimum time from when an input changes until any output starts to change its value.
+
+The critical path,is the longest, and therefore the slowest, path, because the input travels through gates to the output. 
+This path is critical because it limits the speed at which the circuit operates. 
+This  shortest, and therefore the fastest, path goes through the circuit. 
+The propagation delay of a combinational circuit is the sum of the propagation delays through each element on the critical path. The contamination delay is the sum of the contamination delays through each element on the short path.
+
