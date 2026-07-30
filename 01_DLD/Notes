@@ -49,3 +49,8 @@ This path is critical because it limits the speed at which the circuit operates.
 This  shortest, and therefore the fastest, path goes through the circuit. 
 The propagation delay of a combinational circuit is the sum of the propagation delays through each element on the critical path. The contamination delay is the sum of the contamination delays through each element on the short path.
 
+
+---------------------------------------------------------------------------------------------------------
+Day 3
+An N-input CMOS NOR gate uses N nMOS transistors in parallel and N pMOS transistors in series. Transistors in series are slower than transistors in parallel, just as resistors in series have more resistance than resistors in parallel. Moreover, pMOS transistors are slower than nMOS transistors because holes cannot move around the silicon lattice as fast as electrons. Therefore the parallel nMOS transistors are fast and the series pMOS transistors are slow, especially when many are in series.
+
