@@ -54,3 +54,14 @@ The propagation delay of a combinational circuit is the sum of the propagation d
 Day 3
 An N-input CMOS NOR gate uses N nMOS transistors in parallel and N pMOS transistors in series. Transistors in series are slower than transistors in parallel, just as resistors in series have more resistance than resistors in parallel. Moreover, pMOS transistors are slower than nMOS transistors because holes cannot move around the silicon lattice as fast as electrons. Therefore the parallel nMOS transistors are fast and the series pMOS transistors are slow, especially when many are in series.
 
+
+---------------------------------------------------------------------------------------------------------
+Day 4
+Chapter 3
+SR Latch - 2 nor gates. S=1, R=0 => Q=1
+D Latch. D=0/1 CLK=1 => Q=0/1
+D Flip-Flop -> master-slave/ positive edge-triggered ff. Two back-to-back D latches controlled by complementary clocks. D flip-flop copies D to Q on the rising edge of the clock, and remembers its state at all other times. 
+
+Register
+An N-bit register is a bank of N flip-flops that share a common CLK input, so that all bits of the register are updated at the same time.
+An EN must not change while CLK 1, lest the flip-flop see a clock glitch (switch at an incorrect time).
