@@ -65,3 +65,16 @@ D Flip-Flop -> master-slave/ positive edge-triggered ff. Two back-to-back D latc
 Register
 An N-bit register is a bank of N flip-flops that share a common CLK input, so that all bits of the register are updated at the same time.
 An EN must not change while CLK 1, lest the flip-flop see a clock glitch (switch at an incorrect time).
+
+Finite State Machines
+In Moore machines, the outputs depend only on the current state of the machine. In Mealy machines, the outputs depend on both the current state and the current inputs.
+
+The Mealy machine’s output rises a cycle sooner because it responds to the input rather than waiting for the state change. If the Mealy output were delayed through a flip-flop, it would match the Moore output. When choosing your FSM design style, consider when you want your outputs to respond.
+
+Timing
+For the circuit to sample its input correctly, the input (or inputs) must have stabilized at least some setup time, t setup , before the rising edge of the clock and must remain stable for at least some hold time, t hold , after the rising edge of the clock. The sum of the setup and hold times is called the aperture time of the circuit, because it is the total time for which the input must remain stable.
+
+Minimum clock period: T(c) >= t(pcq) + t(pd) + t(setup)
+Maximum propagation delay: t(pd) <= T(c) - (t(pcq) + t(setup)) -->(sequencing overhead)
+Min-delay constraint: t(cd) >= t(hold) - t(ccq)
+
