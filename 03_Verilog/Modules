@@ -1,0 +1,132 @@
+/*A Verilog module begins with the module name and a listing of the inputs and outputs. 
+The assign statement describes combinational logic. ~ indicates NOT, & indicates AND, and | indicates OR.
+
+Ex. y = a'b'c' + ab'c' + ab'c
+
+module sillyfunction(input a, b, c, 
+                    output y);
+
+    assign y = ~a & ~b & ~c |
+                a & ~b & ~c | 
+                a & ~b &c;
+
+endmodule
+
+Ex. Inverter
+
+module inv(input[3:0] a, 
+        output [3:0] y);
+    assign y = ~a;
+endmodule
+
+
+a[3:0] represents a 4-bit bus. The bits, from most significant to least significant, are a[3] , a[2] , a[1] , and a[0] . 
+This is called little-endian order.
+Endianness matters only for operators, such as addition, where the sum of one column carries over into the next.
+
+Ex. gates
+module gates(input[3:0] a, b, 
+            output [3:0] y1, y2, y3, y4, y5); // Five different two-input logic gates acting on 4 bit busses 
+    assign y1 = a & b; // AND
+    assign y2 = a | b; // OR
+    assign y3 = a ^ b; // XOR
+    assign y4 = ~(a & b); // NAND
+    assign y5 = ~(a | b); // NOR
+endmodule
+
+Ex. 8-input AND
+module and8(input [7:0] a, 
+            output y); 
+    assign y = &a; 
+    // &a is much easier to write than 
+    assign y = a[7] & a[6] & a[5] & a[4] & a[3] & a[2] & a[1] & a[0];
+endmodule
+
+
+
+The conditional operator ? : chooses, based on a first expression, between a second and third expression. 
+The first expression is called the condition. If the condition is 1, the operator chooses the second expression. 
+If the condition is 0, the operator chooses the third expression. ? :is especially useful for describing a multiplexer 
+because, based on the first input, it selects between two others. The following code demonstrates the idiom 
+for a 2:1 multiplexer with 4-bit inputs and outputs using the conditional operator.
+
+module mux2(input[3:0] d0, d1, 
+        input s, 
+        output [3:0] y); 
+    assign y = s ? d1 : d0;
+endmodule
+
+module mux4(input  [3:0] d0, d1, d2, d3, 
+        input  [1:0] s, 
+        output [3:0] y); 
+    assign y = s[1] ? (s[0] ? d3 : d2)
+             : (s[0] ? d1 : d0);
+endmodule
+If s[1] is 1, then the multiplexer chooses the first expression, (s[0] ? d3 : d2) . 
+This expression in turn chooses either d3 or d2 based on s[0] ( y d3 if s[0] is1 and d2 if s[0] is 0). 
+If s[1] is 0, then the multiplexer similarly chooses the second expression, which gives either d1 or d0 based on s[0] .
+
+In Verilog, wires are used to represent internal variables whose values are defined by assign statements such as 
+assign p = a ^ b; Wires technically have to be declared only for multibit busses, but it is good practice 
+to include them for all internal variables; their declaration could have been omitted in this example.
+
+module fulladder(input a, b, cin, 
+                output s, cout); 
+    wire p, g; 
+    assign p = a ^ b;
+    assign g = a & b;
+    assign s = p ^ cin;
+    assign cout = g | (p & cin);
+endmodule
+
+
+Numbers: 
+Verilog numbers can specify their base and size (the number of bits used to represent them). 
+The format for declaring constants is N'Bvalue , where N is the size in bits, B is the base, and value gives the value. 
+For example 9'h25 indicates a 9-bit number with a value of 25'h = 37'd = 000100101'b. Verilog supports 'b for binary (base 2), 
+'o for octal (base 8), 'd for decimal (base 10), and 'h for hexadecimal (base 16). If the base is omitted, the base defaults 
+to decimal. If the size is not given, the number is assumed to have as many bits as the expression in which it is being used. 
+Zeros are automatically padded on the front of the number to bringit up to full size. For example, if w is a 6-bit bus, 
+assign w b11 gives w the value 000011. It is better practice to explicitly give the size.
+
+Tristate buffer
+module tristate(input  [3:0] a, 
+                input en, 
+                output [3:0] y); 
+    assign y = en ? a : 4'bz; 
+endmodule
+
+
+assign y = {c[2:1], {3{d[0]}}, c[0], 3’b101};
+The {} operator is used to concatenate busses. {3{d[0]}} indicates three copies of d[0].
+
+Seeing x or u values in simulation is almost always an indication of a bug or bad coding practice. 
+In the synthesized circuit, this corresponds to a floating gate input, uninitialized state, or contention. 
+The x or u may be interpreted randomly by the circuit as 0 or 1, leading to unpredictable behavior.
+
+
+Bit swizzling
+Often it is necessary to operate on a subset of a bus or to concatenate (join together) signals to form busses. 
+These operations are collectively known as bit swizzling.
+
+
+‘timescale 1ns/1ps 
+module example(inputa, b, c, 
+            output y); 
+    wire ab, bb, cb, n1, n2, n3; 
+    
+    assign #1 {ab, bb, cb} = ~ {a, b, c}
+    assign #2 n1 = ab & bb & cb
+    assign #2 n2 = a & bb & cb;
+    assign #2 n3 = a & bb & c
+    assign #4 y = n1 | n2 | n3;
+endmodule
+
+Verilog files can include a timescale directive that indicates the value of each time unit. The statement is of the form
+ ‘ timescale unit/precision. In this file, each unit is 1 ns, and the simulation has 1ps precision. If no timescale directive 
+ is given in the file, a default unit and precision (usually 1ns for both) is used. In Verilog, a # symbol is used to indicate 
+ the number of units of delay. It can be placed in assign statements, as well as non-blocking ( ) and blocking ( ) assignments.
+
+
+
+*/

@@ -11,14 +11,12 @@
             "id": "25318ec55b9da0b9",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "image",
               "state": {
-                "file": "Daily Notes.md",
-                "mode": "source",
-                "source": false
+                "file": "03_Verilog/Снимок экрана — 2026-08-03 в 18.45.20.png"
               },
-              "icon": "lucide-file",
-              "title": "Daily Notes"
+              "icon": "lucide-image",
+              "title": "Снимок экрана — 2026-08-03 в 18.45.20"
             }
           }
         ]
@@ -185,11 +183,13 @@
   },
   "active": "25318ec55b9da0b9",
   "lastOpenFiles": [
+    "Daily Notes.md",
+    "03_Verilog/Снимок экрана — 2026-08-03 в 18.45.20.png",
+    "01_DLD/01_gates.circ",
     "07_Research",
     "06_PCB",
     "05_FPGA",
     "05_",
-    "README.md",
-    "Daily Notes.md"
+    "README.md"
   ]
 }
