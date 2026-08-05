@@ -128,5 +128,138 @@ Verilog files can include a timescale directive that indicates the value of each
  the number of units of delay. It can be placed in assign statements, as well as non-blocking ( ) and blocking ( ) assignments.
 
 
+Structural modeling
+
+Structural model of 4x1 MUX
+module mux4 (input [3:0] d0, d1, d2, d3, 
+            input [3:0] s,
+            output [3:0] y);
+    wire [3:0] low, high;
+    mux2 lowmux (d0, d1, s[0], low);
+    mux2 highmux (d2, d3, s[0], high);
+    mux2 finalmux (low, high, s[1], y);
+endmodule
+
+The three mux2 instances are called lowmux , highmux , and finalmux .
+The mux2 module must be defined elsewhere in the Verilog code.
+
+
+Structural model of 2x1 MUX
+module mux2 (input [3:0] d0, d1,
+            input s,
+            output [3:0] y);
+    tristate t0 (do, ~s, y);
+    tristate t1 (d1, s, y);
+endmodule
+In Verilog, expressions such as ~s are permitted in the port list for an instance. 
+Arbitrarily complicated expressions are legal but discouraged because they make the code difficult to read.
+
+
+Accessing parts of busses
+module mux2_8 (input [7:0] do, d1,
+            input s,
+            output [7:0] y);
+    mux2 lsbmux (d0[3:0], d1[3:0], s, y[3:0]);
+    mux2 msbmux (d0[7:4], d1[7:4], s, y[7:4]);
+endmodule
+
+
+
+Registers
+In Verilog always statements and VHDL process statements, signals keep their old value until an event in the sensitivity 
+list takes place that explicitly causes them to change. Hence, such code, with appropriate sensitivity lists, can be used 
+to describe sequential circuits with memory. For example, the flip-flop includes only clk in the sensitive list. It remembers 
+its old value of q until the next rising edge of the clk , even if d changes in the interim.
+
+In contrast, Verilog continuous assignment statements ( assign ) and VHDL concurrent assignment statements ( ) are reevaluated 
+anytime any of the inputs on the right hand side changes. Therefore, such code necessarily describes combinational logic.
+
+
+Register
+module flop (input clk,
+            input [3:0] d,
+            output reg [3:0] q);
+    always @ (posedge clk)
+        q <= d;
+endmodule
+
+A Verilog always statement is written in the form 
+always @ (sensitivity list) 
+    statement;
+The statement is executed only when the event specified in the sensitivity list occurs. In this example, the statement
+is q <= d (pronounced “q gets d ”). Hence, the flip-flop copies d to q on the positive edge of the clock and otherwise 
+remembers the old state of q. 
+<= is called a nonblocking assignment. Think of it as a regular sign for now; we’ll return to the more subtle points in 
+Section 4.5.4. Note that <= is used instead of assign in always statement. 
+All signals on the left hand side of <= or = in an always statement must be declared as reg . In this example, q is both an 
+output and a reg , so it is declared as output reg[3:0] q . Declaring a signal as reg does not mean the signal is actually 
+the output of a register! All it means is that the signal appears on the left hand side of an assignment in an always statement. 
+We will see later examples of always statements describing combinational logic in which the output is declared reg but does 
+not come from a flip-flop.
+
+Resettable Registers
+When simulation begins or power is first applied to a circuit, the output of a flop or register is unknown. This is indicated 
+with x in Verilog and ‘ u ’ in VHDL. Recall that asynchronous reset occurs immediately, whereas synchronous reset clears the 
+output only on the next rising edge of the clock. 
+
+Asynchronous reset
+module flopr (input clk,
+            input reset,
+            input [3:0] d,
+            output reg [3:0] q);
+    always @ (posedge clk, posedge reset)
+        if(reset) q <= 4'b0;     // q is assigned 0000 value
+        else q <= d;             // q is assigned value of reg - d ff
+endmodule
+
+Synchronous reset
+module flopr (input clk,
+            input reset,
+            input [3:0] d,
+            output reg [3:0] q);
+    always @ (posedge clk)
+        if(reset) q <= 4'b0;     // q is assigned 0000 value
+        else q <= d;             // q is assigned value of reg - d ff
+endmodule
+
+Multiple signals in an always statement sensitivity list are separated with a comma or the word or . Notice that posedge 
+reset is in the sensitivity list on the asynchronously resettable flop, but not on the synchronously resettable flop. Thus, 
+the asynchronously resettable flop immediately responds to a rising edge on reset , but the synchronously resettable flop 
+responds to reset only on the rising edge of the clock. Because the modules have the same name, flopr , you may include only 
+one or the other in your design.
+
+Resettable Enable Register
+Asynchronous reset
+module flopr (input clk,
+            input reset,
+            input en,
+            input [3:0] d,
+            output reg [3:0] q);
+    always @ (posedge clk, posedge reset)
+        if(reset) q <= 4'b0;     // q is assigned 0000 value
+        else if(en) q <= d;      // q is assigned value of reg - d ff only if enable is true
+endmodule
+
+
+A single always/process statement can be used to describe multiple pieces of hardware. 
+Synchronizer
+
+module sync (input clk,
+            input d,
+            output reg q);
+    reg n1;
+    always @ (posedge clk)
+        begin
+            n1 <= d;
+            q <= n1;
+        end
+endmodule
+
+n1 must be declared as a reg because it is an internal signal used on the left hand side of <= in an always statement. 
+Also notice that the begin/end construct is necessary because multiple statements appear in the always statement. 
+This is analogous to { } in C or Java. The begin/end was not needed in the flopr example because if/else counts as a 
+single statement.
+
+
 
 */
