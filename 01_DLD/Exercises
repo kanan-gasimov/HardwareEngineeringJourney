@@ -10,3 +10,14 @@ POWER CONSUMPTION
 A particular cell phone has a 6 watt-hour (W-hr) battery and operates at 1.2V. Suppose that, when it is in use, the cell phone operates at 300 MHz and the average amount of capacitance in the chip switching at any given time is 10 nF (10 8 Farads). When in use, it also broadcasts 3W of power out of its antenna. When the phone is not in use, the dynamic power drops to almost zero because the signal processing is turned off. But the phone also draws 40mA of quiescent current whether it is in use or not. Determine the battery life of the phone (a) if it is not being used, and (b) if it is being used continuously.
 Solution: The static power is P static (0.040 A)(1.2 V) 48mW. If the phone is not being used, this is the only power consumption, so the battery life is (6Whr)/(0.048 W) 125 hours (about 5 days). If the phone is being used, the dynamic power is P dynamic (0.5)(10 8 F)(1.2 V) 2 (3 10 8 Hz) 2.16 W. Together with the static and broadcast power, the total active power is 2.16W 0.048 W 3W 5.2W, so the battery life is 6W-hr/5.2W 1.15 hours. This example somewhat oversimplifies the actual operation of a cell phone, but it illustrates the key ideas of power consumption.
 
+
+
+Example 5.1 RIPPLE-CARRY ADDER AND CARRY-LOOKAHEAD ADDER DELAY 
+Compare the delays of a 32-bit ripple-carry adder and a 32-bit carry-lookahead adder with 4-bit blocks. 
+Assume that each two-input gate delay is 100ps and that a full adder delay is 300ps. Solution: According to Equation 5.1, 
+the propagation delay of the 32-bit ripplecarry adder is 32 * 300 ps = 9.6 ns. 
+The CLA has t(pg) = 100ps, t(pg_block) 6 * 100 ps = 600ps,and t(AND_OR) 2 * 100 ps = 200ps. According to Equation 5.6, the propagation 
+delay of the32-bit carry-lookahead adder with 4-bit blocks is thus 100ps + 600 ps + (32/4 - 1) * 200 ps + (4 * 300 ps) = 3.3ns,
+ almost three times faster than the ripple-carry adder.
+
+ 

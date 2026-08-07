@@ -78,3 +78,40 @@ Minimum clock period: T(c) >= t(pcq) + t(pd) + t(setup)
 Maximum propagation delay: t(pd) <= T(c) - (t(pcq) + t(setup)) -->(sequencing overhead)
 Min-delay constraint: t(cd) >= t(hold) - t(ccq)
 
+
+
+Finite state machine (FSM) consists of a state register and two blocks of combinational logic to compute the next state and the output given the current state and the input.
+
+
+HDL - Verilog notes are in Modules file of 03_Verilog folder.
+
+
+------------------------------------------------------------------------------------------------------------------------------
+
+Digital Building Blocks
+Half Adder consists of 1 XOR and 1 AND gate. S = A ^ B ; Cout = AB
+
+An N-bit adder sums two N-bit inputs, A and B, and a carry in, Cin, to produce an N-bit result, S, and a carry out, Cout. It is commonly called a carry propagate adder ( CPA ) because the carry out of one bit propagates into the next bit.
+
+The delay of the adder, t(ripple) , grows directly with the number of bits, where t(FA) is the delay of a full adder.
+t(ripple) = Nt(FA)
+The fundamental reason that large ripple-carry adders are slow is that the carry signals must propagate through every bit in the adder. A carry-lookahead adder is another type of carry propagate adder that solves this problem by dividing the adder into blocks and providing circuitry to quickly determine the carry out of a block as soon as the carry in is known.
+
+Carry-lookahead adders use generate ( G ) and propagate ( P ) signals that describe how a column or block determines the carry out. The i th column of an adder is said to generate a carry if it produces a carry out independent of the carry in. The i th column of an adder is guaranteed to generate a carry, Ci , if Ai and Bi are both 1. Hence Gi , the generate signal for column i, is calculated as Gi = Ai * Bi . The column is said to propagate a carry if it produces a carry out whenever there is a carry in. The i th column will propagate a carry in, Ci-1 , if either Ai or Bi is 1. Thus, Pi = Ai + Bi . Using these definitions, we can rewrite the carry logic for a particular column of the adder. The i th column of an adder will generate a carryout, C i , if it either generates a carry, G i , or propagates a carry in, Pi Ci-1.
+Ci = Ai * Bi + (Ai + Bi) * Ci-1 = Gi + Pi * Ci-1
+
+Generate signals through columns 3-0:
+G3:0 = G3 + P3 * (G2 + P2 * ( G1 + P1 * G0 ))
+Propagate signals through columns 3-0:
+P3:0 = P3 * P2 * P1 * P0
+
+Carry out Ci using carry in Cj
+Ci = Ci:j + Pi:j * Cj
+
+N-bit adder divided into k-bit blocks has a delay:
+t(CLA) = t(pg) + t(pg_block) + (N/K - 1) * t(AND_OR) + k * t(FA)
+where t(pg) is the delay of the individual generate/propagate gates (a single AND or OR gate) to generate P and G,
+t(pg_block) is the delay to find the generate/propagate signals P(i:j) and G(i:j) for a k-bit block, and t(AND_OR) is the delay from Cin to Cout through the AND/OR logic of the k-bit CLA block. For N > 16, the carry-lookahead adder is generally much faster than the ripple-carry adder. However, the adder delay still increases linearly with N.
+
+
+
