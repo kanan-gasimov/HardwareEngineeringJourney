@@ -114,4 +114,13 @@ where t(pg) is the delay of the individual generate/propagate gates (a single AN
 t(pg_block) is the delay to find the generate/propagate signals P(i:j) and G(i:j) for a k-bit block, and t(AND_OR) is the delay from Cin to Cout through the AND/OR logic of the k-bit CLA block. For N > 16, the carry-lookahead adder is generally much faster than the ripple-carry adder. However, the adder delay still increases linearly with N.
 
 
+Prrefix adder
+Prefix adders extend the generate and propagate logic of the carrylookahead adder to perform addition even faster. They first compute G and P for pairs of columns, then for blocks of 4, then for blocks of 8, then 16, and so forth until the generate signal for every column is known. The sums are computed from these generate signals. In other words, the strategy of a prefix adder is to compute the carry in, Ci-1, for each column, i, as quickly as possible, then to compute the sum
+
+The prefix adder achieves a delay that grows logarithmically rather than linearly with the number of columns in the adder. This speedup is significant, especially for adders with 32 or more bits, but it comes at the expense of more hardware than a simple carrylookahead adder. The network of black cells is called a prefix tree.
+
+The delay of an N-bit prefix adder is 
+t(PA) = t(pg) + log2 N * t(pg_prefix) + t(XOR)
+
+A 4-bit equality comparator. It first checks to determine whether the corresponding bits in each column of A and B are equal, using XNOR gates. The numbers are equal if all of the columns are equal.
 

@@ -20,4 +20,9 @@ The CLA has t(pg) = 100ps, t(pg_block) 6 * 100 ps = 600ps,and t(AND_OR) 2 * 100 
 delay of the32-bit carry-lookahead adder with 4-bit blocks is thus 100ps + 600 ps + (32/4 - 1) * 200 ps + (4 * 300 ps) = 3.3ns,
  almost three times faster than the ripple-carry adder.
 
- 
+
+Example 5.2 PREFIX ADDER DELAY Compute the delay of a 32-bit prefix adder. Assume that each two-input gate delay is 100ps. 
+Solution: The propagation delay of each black prefix cell, t pg _prefix, is 200ps (i.e., two gate delays). Thus, using 
+Equation 5.11 (N-bit PA delay), the propagation delay of the 32-bit prefix adder is 100ps log 2 (32) 200 ps 100 ps 1.2 ns, 
+which is about three times faster than the carry-lookahead adder and eight times faster than the ripple-carry adder from Example 5.1. 
+In practice, the benefits are not quite this great, but prefix adders are still substantially faster than the alternatives.

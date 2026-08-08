@@ -1,0 +1,36 @@
+/* Example 5.1 Adder
+module adder #(parameter N = 16)
+              (input [N-1:0] a, b,
+              input cin,
+              output [N-1:0] s, 
+              output cout);
+    assign {cout, s} = a + b + cin; // {} means concatenation --> 1-bit of cout + 16-bit of s = 17 bits
+endmodule
+
+Subtractor
+module subtractor #(parameter N = 16)
+                   (input [N-1:0] a, b, 
+                   output [N-1:0] y);
+    assign y = a - b;
+endmodule
+
+
+Comparator
+module comparators #(parameter N = 8)
+                    (input [N-1:0] a, b,
+                    output eq, neq,   // ==, !=
+                    output lt, lte,   // <, <=
+                    output gt, gte);  // >, >=
+    assign eq = (a == b);
+    assign neq = (a != b);
+    assign lt = (a < b);
+    assign lte = (a <= b);
+    assign gt = (a > b);
+    assign gte = (a >= b);
+endmodule
+
+
+
+
+
+*/
