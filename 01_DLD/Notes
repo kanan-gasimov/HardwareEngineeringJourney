@@ -124,3 +124,30 @@ t(PA) = t(pg) + log2 N * t(pg_prefix) + t(XOR)
 
 A 4-bit equality comparator. It first checks to determine whether the corresponding bits in each column of A and B are equal, using XNOR gates. The numbers are equal if all of the columns are equal.
 
+
+Shifters and rotators move bits and multiply or divide by powers of 2. 
+Logical shifter — shifts the number to the left (LSL <<) or right (LSR >>) and fills empty spots with 0’s. 
+Ex: 11001 LSR 2 = 00110; 11001 LSL 2 = 00100 
+Arithmetic shifter — is the same as a logical shifter, but on right shifts fills the most significant bits with a copy of the old most significant bit (msb). This is useful for multiplying and dividing signed numbers. Arithmetic shift left (ASL <<<) is the same as logical shift left (LSL). 
+Ex: 11001 ASR 2 = 11110; 11001 ASL 2 = 00100
+
+Rotator — rotates number in circle such that empty spots are filled with bits shifted off the other end. 
+Ex: 11001 ROR 2 = 01110; 11001 ROL 2 = 00111
+An N-bit shifter can be built from N N: 1 multiplexers. The input is shifted by 0 to N-1 bits, depending on the value of the log2 N -bit select lines.
+
+Binary division can be performed using the following algorithm for normalized unsigned numbers in the range[2^N - 1, 2^(N-1)]:
+R = A
+for i = N - 1 to 0 
+    D = R - B
+    if D < 0 then Qi = 0. R' = R   // R < B 
+    else          Qi = 1, R' = D   // R >= B 
+    if i != 0 then R = 2R'
+
+The partial remainder, R, is initialized to the dividend, A. The divisor, B, is repeatedly subtracted from this partial remainder to determine whether it fits. If the difference, D, is negative (i.e., the sign bit of D is 1), then the quotient bit, Qi , is 0 and the difference is discarded. Otherwise, Qi is 1, and the partial remainder is updated to be the difference. In any event, the partial remainder is then doubled (left-shifted by one column), and the process repeats. The result satisfies 
+A/B = (Q + R/B) * 2^(-(N-1))
+The delay of an N-bit array divider increases proportionally to N^2 because the carry must ripple through all N stages in a row before the sign is determined and the multiplexer selects R or D. This repeats for all N rows. Division is a slow and expensive operation in hardware and therefore should be used as infrequently as possible.
+
+
+Number systems
+Fixed-point numbers are analogous to decimals; some of the bits represent the integer part, and the rest represent the fraction. Floating-point numbers are analogous to scientific notation, with a mantissa and an exponent.
+
