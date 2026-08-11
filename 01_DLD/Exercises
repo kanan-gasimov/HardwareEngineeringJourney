@@ -40,3 +40,13 @@ a 1 in the 2^-3 column, leaving 0.125 - 0.125 = 0. Thus, there must be a 0 in th
 +        1
 ----------
  1111.0110
+
+
+
+Example 5.5 32-BIT FLOATING-POINT NUMBERS Show the floating-point representation of the decimal number 228. 
+Solution: First convert the decimal number into binary: 228(10) = 11100100(2) = 1.11001(2) * 2^7 .Figure 5.26 shows the 
+32-bit encoding, which will be modified later for efficiency. The sign bit is positive (0), the 8 exponent bits give the 
+value 7, and the remaining 23 bits are the mantissa.
+0     00000111   111 0010 0000 0000 0000 0000
+Sign  Exp        Mantissa
+

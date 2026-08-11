@@ -151,3 +151,31 @@ The delay of an N-bit array divider increases proportionally to N^2 because the 
 Number systems
 Fixed-point numbers are analogous to decimals; some of the bits represent the integer part, and the rest represent the fraction. Floating-point numbers are analogous to scientific notation, with a mantissa and an exponent.
 
+Floating-point numbers have a sign, mantissa (M), base (B), and exponent (E). For example, the number 4.1 * 10^3 is the decimal scientific notation for 4100. It has a mantissa of 4.1, a base of 10, and an exponent of 3.
+The decimal point floats to the position right after the most significant digit. Floating-point numbers are base 2 with a binary mantissa. 32 bits are used to represent 1 sign bit, 8 exponent bits, and 23 mantissa bits.
+
+ The exponent needs to represent both positive and negative exponents. To do so, floating-point uses a biased exponent, which is the original exponent plus a constant bias. 32-bit floating-point uses a bias of 127. For example, for the exponent 7, the biased exponent is 7 + 127 = 134 = 10000110(2). For the exponent -4, the biased exponent is: -4 + 127 = 123 = 01111011(2).
+
+ Rounding
+ Arithmetic results that fall outside of the available precision must round to a neighboring number. The rounding modes are: (1) round down, (2)round up, (3) round toward zero, and (4) round to nearest. The default rounding mode is round to nearest. In the round to nearest mode, if two numbers are equally near, the one with a 0 in the least significant position of the fraction is chosen. Recall that a number overflows when its magnitude is too large to be represented. Likewise, a number underflows when it is too tiny to be represented. In round to nearest mode, overflows are rounded up to and underflows are rounded down to 0.
+
+ A shift register has a clock, a serial input, S(in) , a serial output, S(out) , and N parallel outputs, Q(N-1:0). On each rising edge of the clock, a new bit is shifted in from S(in) and all the subsequent contents are shifted forward. The last bit in the shift register is available at S(out) . Shift registers can be viewed as serial-to-parallel converters. The input is provided serially (one bit at a time) at S(in) . After N cycles, the past N inputs are available in parallel at Q.
+
+
+Most systems have too many flip-flops to dedicate individual pins to read and write each flip-flop. Instead, all the flip-flops in the system are connected together into a shift register called a scan chain. In normal operation, the flip-flops load data from their D input and ignore the scan chain. In test mode, the flip-flops serially shift theircontents out and shift in new contents using S in and S out . The load multiplexer is usually integrated into the flip-flop to produce a scannable flip-flop. Figure 5.37 shows the schematic and symbol for a scannable flip-flop and illustrates how the flops are cascaded to build an N-bit scannable register. For example, the 32-bit counter could be tested by shifting in the pattern 011111...111 in test mode, counting for one cycle in normal mode, then shifting out the result, which should be 100000 . . . 000. This requires only 32 + 1 + 32 = 65 cycles.
+
+
+
+The memory is organized as a two-dimensional array of memory cells. The memory reads or writes the contents of one of the rows of the array. This row is specified by an Address. The value read or written is called Data. An array with N-bit addresses and M-bit data has 2^N rows and M columns. Each row of data is called a word. Thus, the array contains 2^N M-bit words.
+The size of an array is given as depth x width
+Memory arrays are built as an array of bit cells, each of which stores 1bit of data. Each bit cell is connected to a wordline and a bitline. For each combination of address bits, the memory asserts a single wordline that activates the bit cells in that row. When the wordline is HIGH, the stored bit transfers to or from the bitline. Otherwise, the bitline is disconnected from the bit cell. The circuitry to store the bit varies with memory type.
+To read a bit cell, the bitline is initially left floating (Z). Then the wordline is turned ON, allowing the stored value to drive the bitline to 0 or 1. 
+To write a bit cell, the bitline is strongly driven to the desired value. Then the wordline is turned ON, connecting the bitline to the stored bit. The strongly driven bitline overpowers the contents of the bit cell, writ- ing the desired value into the stored bit.
+
+Dynamic RAM stores a bit as the presence or absence of charge on a capacitor. The nMOS transistor behaves as a switch that either connects or disconnects the capacitor from the bitline. When the wordline is asserted, the nMOS transistor turns ON, and the stored bit value transfers to or from the bitline. The capacitor node is dynamic because it is not actively driven HIGH or LOW by a transistor tied to V(DD) or GND.
+Upon a read, data values are transferred from the capacitor to the bitline. Upon a write, data values are transferred from the bitline to the capacitor.
+Reading destroys the bit value stored on the capacitor, so the data word must be restored (rewritten) after each read. Even when DRAM is not read, the contents must be refreshed (read and rewritten) every few milliseconds, because the charge on the capacitor gradually leaks away.
+
+Static RAM ( SRAM, pronounced “es-ram”) is static because stored bits do not need to be refreshed. The data bit is stored on cross-coupled inverters. When the wordline is asserted, both nMOS transistors turn on, and data values are transferred to or from the bitlines. Unlike DRAM, if noise degrades the value of the stored bit, the cross-coupled inverters restore the value.
+
+
