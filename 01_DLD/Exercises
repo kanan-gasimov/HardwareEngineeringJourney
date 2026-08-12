@@ -50,3 +50,30 @@ value 7, and the remaining 23 bits are the mantissa.
 0     00000111   111 0010 0000 0000 0000 0000
 Sign  Exp        Mantissa
 
+
+Example 5.6 FUNCTIONS BUILT USING CLBS Explain how to configure a CLB to perform the following functions: 
+(a)X = A'B'C + ABC' and Y = AB'; (b) Y = JKLMPQR; (c) a divide-by-3 counter with binary state encoding (see Figure 3.29(a)). 
+Solution: (a) Configure the F-LUT to compute X and the G-LUT to compute Y, as shown in Figure 5.59. Inputs F3, F2, and F1 are 
+A, B, and C, respectively (these connections are set by the routing channels). Inputs G2 and G1 are A and B. F4, G4, and G3 
+are don’t cares (and may be connected to 0). Configure the final multiplexers to select X from the F-LUT and Y from the G-LUT. 
+In general, a CLB can compute any two functions, of up to four variables each, in this fashion. 
+(b) Configure the F-LUT to compute F = JKLM and the G-LUT to compute G = PQR. Then configure the H-LUT to compute H = FG. 
+Configure the final multiplexer to select Y from the H-LUT. This configuration is shown in Figure 5.60. In general, a CLB 
+can compute certain functions of up to nine variables in this way. 
+(c) The FSM has two bits of state S(1:0) and one output ( Y ). The next state depends on the two bits of current state. 
+Use the F-LUT and G-LUT to compute the next state from the current state, as shown in Figure 5.61. Use the two flip- flops 
+to hold this state. The flip-flops have a dedicated reset input from the SR signal in the CLB. The registered outputs are fed 
+back to the inputs using the routing channels, as indicated by the dashed blue lines. In general, another CLB might be 
+necessary to compute the output Y. However, in this case, Y = S'(0) , so Y can come from the same F-LUT used to compute S'(0). 
+Hence, the entire FSM fits in a single CLB. In general, an FSM requires at least one CLB for every two bits of state, and it 
+may require more CLBs for the output or next state logic if they are too complex to fit in a single LUT.
+
+
+Example 5.7 CLB DELAY 
+Alyssa P. Hacker is building a finite state machine that must run at 200 MHz. She uses a Spartan 3 FPGA with the following 
+specifications: t(CLB) = 0.61ns per CLB; t(setup) = 0.53ns and t(pcq) = 0.72ns for all flip-flops. What is the maximum 
+number of CLBs her design can use? You can ignore interconnect delay. 
+Solution:Alyssa uses Equation 3.13 to solve for the maximum propagation delay of the logic: t(pd) = T(c) - (t(pcq) + t(setup)).
+Thus, t(pd) <= 5ns - (0.72ns + 0.53ns), so t(pd) <= 3.75ns. The delay of each CLB, t(CLB) , is 0.61ns, and the maximum number 
+of CLBs, N , is Nt(CLB) <= 3.75 ns. Thus, N = 6.
+

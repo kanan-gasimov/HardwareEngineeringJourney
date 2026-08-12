@@ -64,6 +64,30 @@ module shiftreg #(parameter N = 16)
 endmodule
 
 
+2^N word x M-bit RAM
+module ram #(parameter N = 6, M = 32)
+            (input clk, 
+            input we,           // write enable
+            input [N-1:0] adr,
+            input [N-1:0] din,
+            output [N-1:0] dout);
+    reg [M-1:0] mem [2**N-1:0];   // register and memory
+    always @ (posedge clk)
+        if (we) mem [adr] <= din;
+    assign dout = mem[adr];
+endmodule
+
+4-word x 3-bit ROM
+module rom (input [1:0] adr,
+            output reg [2:0] dout);
+    always @ (adr)
+        case(adr)
+            2'b00: dout <= 3'b011;
+            2'b01: dout <= 3'b110;
+            2'b10: dout <= 3'b100;
+            2'b11: dout <= 3'b010;
+        endcase
+endmodule
 
 
 
