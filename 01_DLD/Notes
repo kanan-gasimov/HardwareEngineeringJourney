@@ -203,3 +203,32 @@ Many ROMs and PLAs use dynamic circuits in place of pseudo-nMOS circuits. Dynami
 In pseudo-nMOS circuits, the weak pMOS transistor pulls the output HIGH only if there is no path to GND through the pulldown (nMOS) network.
 
 
+The architecture is the programmer’s view of a computer. It is defined by the instruction set (language), and operand locations (registers and memory). Many different architectures exist, such as IA-32, MIPS, SPARC, and PowerPC. The first step in understanding any computer architecture is to learn its language. The words in a computer’s language are called instructions . The computer’s vocabulary is called the instruction set. All programs running on a computer use the same instruction set .
+Computer hardware understands only 1’s and 0’s, so instructions are encoded as binary numbers in a format called machine language .
+
+Assembly language is the human-readable representation of the computer’s native language. Each assembly language instruction specifies both the operation to perform and the operands on which to operate. 
+The first part of the assembly instruction, add , is called the mnemonic and indicates what operation to perform. The operation is performed on b and c , the source operands , and the result is written to a , the destination operand .
+
+
+Design Principle 1: Simplicity favors regularity.
+Instructions with a consistent number of operands—in this case, two sources and one destination—are easier to encode and handle in hardware. More complex high-level code translates into multiple MIPS instructions.
+In assembly language, only single-line comments are used. They begin with # and continue until the end of the line.
+
+Design Principle 2: Make the common case fast.
+The MIPS instruction set makes the common case fast by including only simple, commonly used instructions. The number of instructions is kept small so that the hardware required to decode the instruction and its operands can be simple, small, and fast.
+Thus, MIPS is a reduced instruction set computer ( RISC ) architecture. Architectures with many complex instructions, such as Intel’s IA-32 architecture, are complex instruction set computers ( CISC ).
+Instruction set with 64 simple instructions would need log 2 64 6 bits to encode the operation.
+
+An instruction operates on operands. Operands can be stored in registers or memory, or they may be constants stored in the instruction itself. Operands stored as constants or in registers are accessed quickly, but they hold only a small amount of data.
+MIPS is called a 32-bit architecture because it operates on 32-bit data.
+Most architectures specify a small number of registers that hold commonly used operands. The MIPS architecture uses 32 registers, called the register set or register file . The fewer the registers, the faster they can be accessed. 
+
+Design Principle 3: Smaller is faster.
+A small register file is typically built from a small SRAM array. The SRAM array uses a small decoder and bitlines connected to relatively few memory cells, so it has a shorter critical path than a large memory does.
+MIPS register names are preceded by the $ sign.
+MIPS generally stores variables in 18 of the 32 registers: $s0– $s7 , and $t0– $t9 . Register names beginning with $s are called saved registers. Following MIPS convention, these registers store variables such as a, b , and c . Saved registers have special connotations when they are used with procedure calls. Register names beginning with $t are called temporary registers. They are used for storing temporary variables. 
+
+Register Set
+The MIPS architecture defines 32 registers. Each register has a name and a number ranging from 0 to 31. $0 always contains the value 0 because this constant is so frequently used in computer programs.
+
+

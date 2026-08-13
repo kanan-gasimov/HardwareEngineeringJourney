@@ -1,0 +1,14 @@
+Example 6.1 TRANSLATING HIGH-LEVEL CODE TO ASSEMBLY LANGUAGE 
+Translate the following high-level code into assembly language. Assume variables a–c are held in registers $s0–$s2 and f–j 
+are in $s3–$s7 . a = b - c; f = (g + h) - (i + j); Solution: The program uses four assembly language instructions. 
+# MIPS assembly code 
+# $s0 a, $s1 b, $s2 c, $s3 f, $s4 g, $s5 h, 
+# $s6 i, $s7 j 
+  sub $s0, $s1, $s2  # a = b - c 
+  add $t0, $s4, $s5  # $t0 = g + h 
+  add $t1, $s6, $s7  # $t1 = i + j 
+  sub $s3, $t0, $t1  # f = (g + h) - (i + j)
+
+
+
+  

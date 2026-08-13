@@ -1,0 +1,20 @@
+Addition a = b + c;
+add a, b, c
+
+Subtraction a = b - c;
+sub a, b, c
+
+Complex code a = b + c - d
+sub t, c, d
+add a, b, t
+
+Add instruction with register operand
+# $s0 = a, $s1 = b, $s2 = c
+  add $s0, $s1, $s2
+
+MIPS assembly code using a temporary register, $t0 , to store the intermediate calculation of c - d
+# $s0 = a, $s1 = b, $s2 = c, $s3 = d
+  sub $t0, $s2, $s3
+  add $s0, $s1, $t0
+
+
