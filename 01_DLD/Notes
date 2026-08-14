@@ -232,3 +232,18 @@ Register Set
 The MIPS architecture defines 32 registers. Each register has a name and a number ranging from 0 to 31. $0 always contains the value 0 because this constant is so frequently used in computer programs.
 
 
+Memory
+Memories are organized as an array of data words. The MIPS architecture uses 32-bit memory addresses and 32-bit data words.
+MIPS uses a byte-addressable memory. That is, each byte in memory has a unique address. 
+Word-addressable memory is that, each 32-bit data word has a unique 32-bit address. Both the 32-bit word address and the 32-bit data value are written in hexadecimal.
+For example, data 0xF2F1AC07 is stored at memory address 1. Hexadecimal constants are written with the prefix 0x. By convention, memory is drawn with low memory addresses toward the bottom and high memory addresses toward the top.
+MIPS uses the load word instruction, lw , to read a data word from memory into a register. The lw instruction specifies the effective address in memory as thesum of a base address and an offset . The base address (written in parentheses in the instruction) is a register. The offset is a constant (written before the parentheses).
+Similarly, MIPS uses the store word instruction, sw , to write a data word from a register into memory.
+
+The MIPS memory model is byte-addressable, not word-addressable. Each data byte has a unique address. A 32-bit word consists of four 8-bit bytes. Soeach word address is a multiple of 4.
+The MIPS architecture also provides the lb and sb instructions that load and store single bytes in memory rather than words. They are similar to lw and sw.
+Byte-addressable memories are organized in a big-endian and little-endian fashion. In both formats, the most significant byte (MSB) is on the left and the least significant byte (LSB) is on the right. In big-endian machines, bytes are numbered starting with 0 at the big (most significant) end. In little-endian machines, bytes are numbered starting with 0 at the little (least significant) end. Word addresses are the same in both formats and refer to the same bytes. Only the addresses of the bytes within a word differ.
+
+
+
+

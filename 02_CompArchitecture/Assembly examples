@@ -11,4 +11,20 @@ are in $s3–$s7 . a = b - c; f = (g + h) - (i + j); Solution: The program uses 
 
 
 
-  
+Example 6.2 BIG- AND LITTLE-ENDIAN MEMORY
+Suppose that $s0 initially contains 0x23456789. After the following program is run on a big-endian system, what value does 
+$sO contain? In a little-endian system? lb $s0, 1($0) loads the data at byte address (1 + $0) = 1 into the least significant 
+byte of $s0. lb is discussed in detail in Section 6.4.5.
+sw $sO, 0($0)
+lb $sO, 1($0)
+Solution: Figure 6.4 shows how big- and little-endian machines store the value 0x23456789 in memory word O. After the load 
+byte instruction, lb $s0, 1($0), $s0 would contain 0x00000045 on a big-endian system and 0x00000067 on a little-endian system.
+
+                Big-endian          Little-endian
+Byte address.   0  1  2  3          3  2  1  0  
+Data value      23 45 67 89         23 45 67 89
+                MSB      LSB        MSB      LSB
+
+
+
+
