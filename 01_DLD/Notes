@@ -240,10 +240,13 @@ For example, data 0xF2F1AC07 is stored at memory address 1. Hexadecimal constant
 MIPS uses the load word instruction, lw , to read a data word from memory into a register. The lw instruction specifies the effective address in memory as thesum of a base address and an offset . The base address (written in parentheses in the instruction) is a register. The offset is a constant (written before the parentheses).
 Similarly, MIPS uses the store word instruction, sw , to write a data word from a register into memory.
 
-The MIPS memory model is byte-addressable, not word-addressable. Each data byte has a unique address. A 32-bit word consists of four 8-bit bytes. Soeach word address is a multiple of 4.
+The MIPS memory model is byte-addressable, not word-addressable. Each data byte has a unique address. A 32-bit word consists of four 8-bit bytes. Each word address is a multiple of 4.
 The MIPS architecture also provides the lb and sb instructions that load and store single bytes in memory rather than words. They are similar to lw and sw.
 Byte-addressable memories are organized in a big-endian and little-endian fashion. In both formats, the most significant byte (MSB) is on the left and the least significant byte (LSB) is on the right. In big-endian machines, bytes are numbered starting with 0 at the big (most significant) end. In little-endian machines, bytes are numbered starting with 0 at the little (least significant) end. Word addresses are the same in both formats and refer to the same bytes. Only the addresses of the bytes within a word differ.
 
+Load word and store word, lw and sw , also illustrate the use of constants in MIPS instructions. These constants are called immediates , because their values are immediately available from the instruction and do not require a register or memory access. Add immediate, addi , is another common MIPS instruction that uses an immediate operand. addi adds the immediate specified in the instruction to a value in a register.
 
-
+Design Principle 4: Good design demands good compromises.
+The MIPS instruction set makes the compromise of supporting three instruction formats. One format, used for instructions such as add and sub , has three register operands. Another, used for instructions such as lw and addi , has two register operands and a 16-bit immediate. A third, to be discussed later, has a 26-bit immediate and no registers.
+MIPS uses 32-bit instructions. Even though some instructions may not require all 32 bits of encoding, variable-length instructions would add too much complexity. MIPS makes the compromise of defining three instruction formats: R-type , I-type, and J-type. R-type instructions operate on three registers. I-type instructions operate on two registers and a 16-bit immediate. J-type (jump) instructions operate on one 26-bit immediate.
 
