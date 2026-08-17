@@ -250,3 +250,29 @@ Design Principle 4: Good design demands good compromises.
 The MIPS instruction set makes the compromise of supporting three instruction formats. One format, used for instructions such as add and sub , has three register operands. Another, used for instructions such as lw and addi , has two register operands and a 16-bit immediate. A third, to be discussed later, has a 26-bit immediate and no registers.
 MIPS uses 32-bit instructions. Even though some instructions may not require all 32 bits of encoding, variable-length instructions would add too much complexity. MIPS makes the compromise of defining three instruction formats: R-type , I-type, and J-type. R-type instructions operate on three registers. I-type instructions operate on two registers and a 16-bit immediate. J-type (jump) instructions operate on one 26-bit immediate.
 
+The name R-type is short for register-type . R-type instructions use three registers as operands: two as sources, and one as a destination. The 32-bit instruction has six fields: op(6-bit), rs(5-bit), rt(5-bit), rd(5-bit), shamt(5-bit) , and funct(6-bit). Each field is five or six bits, as indicated.
+The operation the instruction performs is encoded in the two fields highlighted in blue: op (also called opcode or operation code) and funct (also called the function). All R-type instructions have an opcode of 0. The specific R-type operation is determined by the funct field. Forexample, the opcode and funct fields for the add instruction are 0 (000000(2)) and 32 (100000(2)), respectively. Similarly, the sub instruction has an opcode and funct field of 0 and 34.
+The operands are encoded in the three fields: rs, rt , and rd . The first two registers, rs and rt , are the source registers; rd is the destination register. 
+The fifth field, shamt , is used only in shift operations. In those instructions, the binary value stored in the 5-bit shamt field indicates the amount to shift. For all other R-type instructions, shamt is 0.
+
+The name I-type is short for immediate-type . I-type instructions use two register operands and one immediate operand. The 32-bit instruction has four fields: op , rs , rt , and imm . The first three fields, op , rs , and rt , are like those of R-type instructions. The imm field holds the 16-bit immediate.
+The operation is determined solely by the opcode , highlighted in blue. The operands are specified in the three fields, rs, rt, and imm. rs and imm are always used as source operands. rt is used as a destination for some instructions (such as addi and lw) but as another source for others (such as sw).
+# Negative immediate values are represented using 16-bit two’scomplement notation. 
+rt is listed first in the assembly language instruction when it is used as a destination, but it is the second register field in the machine language instruction.
+I-type instructions have a 16-bit immediate field, but the immediates are used in 32-bit operations. For example, lw adds a 16-bit offset to a 32-bit base register. What should go in the upper half of the 32 bits? For positive immediates, the upper half should be all 0’s, but for negative immediates, the upper half should be all 1’s.
+Most MIPS instructions sign-extend the immediate. For example, addi, Iw, and sw do sign extension to support both positive and negative immediates. An exception to this rule is that logical operations (andi, ori, xori) place O's in the upper half; this is called zero extension rather than sign extension.
+
+The name J-type is short for jump-type. This format is used only with jump instructions. This instruction format uses a single 26-bit address operand, addr. Like other formats, J-type instructions begin with a 6-bit opcode. The remaining bits are used to specify an address, addr.
+
+Interpreting Machine Language Code
+All formats start with 6-bit opcode field. If it is 0, the instruction type is R-type; otherwise it is I- or J-type. 
+
+Stored Program
+A program written in machine language is a series of 32-bit numbers(instructions) that can be stored in memory. This is stored program concept. The instructions in a stored program are retrieved, or fetched, from memory and executed by the processor. 
+In MIPS programs, the instructions are normally stored starting at address 0x00400000. Remember that MIPS memory is byte addressable, so 32-bit (4-byte) instruction addresses advance by 4 bytes, not 1.
+To run or execute the stored program, the processor fetches the instructions from memory sequentially. The fetched instructions are then decoded and executed by the digital hardware. The address of the current instruction is kept in a 32-bit register called the program counter (PC).
+The PC is separate from the 32 registers.
+The architectural state of a microprocessor holds the state of a pro-gram. For MIPS, the architectural state consists of the register file and PC. If the operating system saves the architectural state at some point in the program, it can interrupt the program, do something else, then restore the state such that the program continues properly, unaware that it was ever interrupted. The architectural state is also of great importance when we build a microprocessor.
+
+
+

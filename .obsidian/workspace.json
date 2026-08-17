@@ -13,10 +13,10 @@
             "state": {
               "type": "image",
               "state": {
-                "file": "01_DLD/Снимок экрана — 2026-08-07 в 17.57.05.png"
+                "file": "03_Verilog/Снимок экрана — 2026-08-17 в 20.14.19.png"
               },
               "icon": "lucide-image",
-              "title": "Снимок экрана — 2026-08-07 в 17.57.05"
+              "title": "Снимок экрана — 2026-08-17 в 20.14.19"
             }
           }
         ]
@@ -183,12 +183,9 @@
   },
   "active": "25318ec55b9da0b9",
   "lastOpenFiles": [
-    "01_DLD/Снимок экрана — 2026-08-13 в 19.23.22.png",
-    "02_CompArchitecture/Assembly examples",
-    "02_CompArchitecture/MIPS Assembly Codes",
-    "02_CompArchitecture/MIPS Assembly Code Examples",
-    "02_CompArchitecture/Assembly",
+    "03_Verilog/Снимок экрана — 2026-08-17 в 20.37.00.png",
     "01_DLD/Снимок экрана — 2026-08-12 в 18.03.33.png",
+    "03_Verilog/Снимок экрана — 2026-08-17 в 20.14.19.png",
     "01_DLD/Снимок экрана — 2026-08-12 в 17.47.08.png",
     "01_DLD/Снимок экрана — 2026-08-12 в 17.24.33.png",
     "01_DLD/Снимок экрана — 2026-08-12 в 16.09.14.png",
@@ -197,7 +194,10 @@
     "01_DLD/Снимок экрана — 2026-08-10 в 20.35.25.png",
     "01_DLD/Снимок экрана — 2026-08-10 в 20.16.48.png",
     "01_DLD/Снимок экрана — 2026-08-10 в 18.56.55.png",
-    "01_DLD/Снимок экрана — 2026-08-09 в 17.34.25.png",
+    "02_CompArchitecture/Assembly examples",
+    "02_CompArchitecture/MIPS Assembly Codes",
+    "02_CompArchitecture/MIPS Assembly Code Examples",
+    "02_CompArchitecture/Assembly",
     "Daily Notes.md",
     "01_DLD/01_gates.circ",
     "07_Research",

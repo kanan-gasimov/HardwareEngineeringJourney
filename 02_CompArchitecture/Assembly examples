@@ -26,5 +26,27 @@ Data value      23 45 67 89         23 45 67 89
                 MSB      LSB        MSB      LSB
 
 
+Example 6.3 TRANSLATING ASSEMBLY LANGUAGE TO MACHINE LANGUAGE 
+Translate the following assembly language statement into machine language. add $t0, $s4, $s5 
+Solution: According to Table 6.1, $t0 , $s4 , and $s5 are registers 8, 20, and 21. According to Tables B.1 and B.2, add has an 
+opcode of 0 and a funct code of 32. Thus, the fields and machine code are given in Figure 6.7. The easiest way to write the 
+machine language in hexadecimal is to first write it in binary, then look at consecutive groups of four bits, which correspond 
+to hexadecimal digits (indicated in blue). Hence, the machine language instruction is 0x02954020.
 
+
+Example 6.4 TRANSLATING I-TYPE ASSEMBLY INSTRUCTIONS INTO MACHINE CODE 
+Translate the following I-type instruction into machine code. lw $s3, 24($s4) 
+Solution: According to Table 6.1, $s3 and $s4 are registers 19 and 20, respectively. Table B.1 indicates that lw has an opcode 
+of 35. rs specifies the base address, $s4 , and rt specifies the destination register, $s3 . The immediate, imm , encodes the 
+16-bit offset, 24 . Thus, the fields and machine code are given in Figure 6.10.
+
+
+Example 6.5 TRANSLATING MACHINE LANGUAGE TO ASSEMBLY LANGUAGE
+Translate the following machine language code into assembly language.
+0x2237 FFF1
+0x02F34022
+Solution: First, we represent each instruction in binary and look at the six most significant bits to find the opcode for each 
+instruction. The opcode determines how to interpret the rest of the bits. The opcodes are 001000(2) (8(10)) and 000000(2) (0(10)), 
+indicating an addi and R-type instruction, respectively. The funct field of the R-type instruction is 100010(2) (3410), 
+indicating that it is a sub instruction.
 
