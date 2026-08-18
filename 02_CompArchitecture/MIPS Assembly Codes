@@ -42,3 +42,35 @@ sw $s5, 400($0)    # write $s5 to data word 100
   addi $s1, $s0, -12     # b = a - 12
 
 
+16-bit constant 
+# $s0 = a
+  addi $s0, $0, 0x4f3c    # a = 0x4f3c
+
+32-bit constant
+# $s0 = a
+  lui $s0, 0x6d5e         # a = 0x6d5e0000 
+  ori $s0, $s0, 0x4f3c    # a = 0x6d5e4f3c
+  
+
+Conditional branching using beq
+  addi $s0, $0, 4       # $s0 = 0 + 4 = 4
+  addi $s1, $0, 1       # $s1 = 0 + 1 = 1
+  sll $s0, $s1, 2       # $s1 = 1 << 2 = 4
+  beq $s0, $s1, target  # $s0 == $s1, so branch is taken
+  addi $s1, $s1, 1      # not executed
+  sub $s1, $s1, $s0     # not executed
+target:
+  add $s1, $s1, $s0     # $s1 = 4 + 4 = 8
+
+
+Conditional branching using bne
+  addi $s0, $0, 4       # $s0 = 0 + 4 = 4
+  addi $s1, $0, 1       # $s1 = 0 + 1 = 1
+  sll $s0, $s1, 2       # $s1 = 1 << 2 = 4
+  beq $s0, $s1, target  # $s0 == $s1, so branch is not taken
+  addi $s1, $s1, 1      # $s1 = 4 + 1 = 5
+  sub $s1, $s1, $s0     # $s1 = 5 - 4 = 1
+target:
+  add $s1, $s1, $s0     # $s1 = 1 + 4 = 5
+
+

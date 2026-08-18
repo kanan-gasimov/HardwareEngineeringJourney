@@ -275,4 +275,33 @@ The PC is separate from the 32 registers.
 The architectural state of a microprocessor holds the state of a pro-gram. For MIPS, the architectural state consists of the register file and PC. If the operating system saves the architectural state at some point in the program, it can interrupt the program, do something else, then restore the state such that the program continues properly, unaware that it was ever interrupted. The architectural state is also of great importance when we build a microprocessor.
 
 
+Logical instructions
+MIPS logical operations include and , or , xor , and nor . These R-type instructions operate bit-by-bit on two source registers and write the result to the destination register. 
+The and instruction is useful for masking bits (forsing unwanted bits to 0). The or instruction is useful for combining bits from two registers.
+MIPS does not support NOT instruction, so A NOR $0 = NOT substitutes it. 
+Logical operations can also operate on immediates. These I-type instructions are andi , ori , and xori . nori is not provided, because the same functionality can be easily implemented using the other instructions.
 
+Shift instructions shift the value in a register left or right by up to 31bits. Shift operations multiply or divide by powers of two. MIPS shift operations are sll (shift left logical), srl (shift right logical), and sra (shift right arithmetic).
+Shifting a register value left by N is equivalent to multiplying it by 2^N . Likewise, arithmetically shifting a value right by N is equivalent to dividing it by 2^N. MIPS also has variable-shift instructions: sllv (shift left logical variable), srlv (shift right logical variable), and srav (shift right arithmetic variable).
+
+The addi instructioin is helpful for assigning 16-bit constants. 
+To assign 32-bit constants, use a load upper immediate instruction ( lui ) followed by an or immediate ( ori ) instruction. lui loads a 16-bit immediate into the upper half of a register and sets the lower half to 0. As mentioned earlier, ori merges a 16bit immediate into the lower half.
+
+Multiplication and division are somewhat different from other arithmetic operations. Multiplying two 32-bit numbers produces a 64-bit product. Dividing two 32-bit numbers produces a 32-bit quotient and a 32-bit remainder.
+The MIPS architecture has two special-purpose registers, hi and lo, which are used to hold the results of multiplication and division. mult $sO, $s1 multiplies the values in $s0 and $s1. The 32 most significant bits are placed in hi and the 32 least significant bits are placed in lo. Similarly, div $sO, $s1 computes $s0/$s1. The quotient is placed in lo and the remainder is placed in hi.
+hi and lo are not among the usual 32 MIPS registers, so special instructions are needed to access them. mfhi $s2 (move from hi) copies the value in hi to $s2. mflo $s3 (move from lo) copies the value in 1o to $s3. hi and lo are technically part of the architectural state; however, we generally ignore these registers in this book.
+
+Branching
+To sequentially execute instructions, the program counter increments by 4 after each instruction. Branch instructions modify the program counter to skip over sections of code or to go back to repeat previous code. Conditional branch instructions perform a test and branch only if the test is TRUE. Unconditional branch instructions,
+called jumps, always branch.
+Conditional Branches
+The MIPS instruction set has two conditional branch instructions: branch if equal (beq) and branch if not equal (bne). beq branches when the values in two registers are equal, and bne branches when they are not equal.
+Branches are written as beq $rs, frt, imm, where $rs is the first source register. This order is reversed from most I-type instructions.
+When the program reaches the branch if equal instruction (beq), the value in $sO is equal to the value in $s1, so the branch is taken. The two instructions directly after the branch and before the label are not executed.
+Assembly code uses labels to indicate instruction locations in the program. When the assembly code is translated into machine code, these labels are translated into instruction addresses. MIPS assembly labels are followed by a (:) and cannot use reserved words, such as instruction mnemonics. Most programmers indent their instructions but not the labels, to help make labels stand out.
+In an example of using the branch if not equal instruction (bne), the branch is not taken because $s0 is equal to $s1, and the code continues to execute directly after the bne instruction. All instructions in code are executed.
+Jump - unconditional branch
+A program can unconditionally branch, or jump, using the three types of jump instructions: jump (j), jump and link (jal), and jump register (jr).
+Jump (j) jumps directly to the instruction at the specified label. Jump and link (jal) is similar to j but is used by procedures to save a return address. Jump register (jr) jumps to the address held in a register.
+After the j target instruction, the program unconditionally continues executing the add instruction at the label target.
+All of the instructions between the jump and the label are skipped.

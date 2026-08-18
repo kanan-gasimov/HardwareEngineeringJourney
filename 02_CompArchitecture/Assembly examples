@@ -50,3 +50,23 @@ instruction. The opcode determines how to interpret the rest of the bits. The op
 indicating an addi and R-type instruction, respectively. The funct field of the R-type instruction is 100010(2) (3410), 
 indicating that it is a sub instruction.
 
+
+
+
+Example 6.14 Unconditional branching using j
+  addi $s0, $0, 4       # $s0 = 4
+  addi $s1, $0, 1       # $s1 = 1
+  j target              # jump to target
+  addi $s1, $s1, 1      # not executed
+  sub $s1, $s1, $s0     # not executed
+target:
+  add $s1, $s1, $s0     # $s1 = 1 + 4 = 5
+
+
+Example 6.15 Unconditional branching using jr
+0x00002000 addi $s0, $0, 0x2010   # $s0 = 0x2010
+0x00002004 jr $s0                 # jump to 0x00002010
+0x00002008 addi $s1, $0, 1        # not executed
+0x0000200c sra $s1, $s1, 2        # not executed
+0x00002010 lw $s3, 44 ($s1)       # executed after jr instruction
+
