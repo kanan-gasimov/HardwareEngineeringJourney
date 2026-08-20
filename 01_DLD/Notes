@@ -305,3 +305,21 @@ A program can unconditionally branch, or jump, using the three types of jump ins
 Jump (j) jumps directly to the instruction at the specified label. Jump and link (jal) is similar to j but is used by procedures to save a return address. Jump register (jr) jumps to the address held in a register.
 After the j target instruction, the program unconditionally continues executing the add instruction at the label target.
 All of the instructions between the jump and the label are skipped.
+
+The assembly code for the if statement tests the opposite condition of the one in the high-level code. In Code Example 6.16, the high-level code tests for i == j, and the assembly code tests for i != j. The bne instruction branches (skips the if block) when i !=j. Otherwise, i == j, the branch is not taken, and the if block is executed as desired.
+
+for loops, like while loops, repeatedly execute a block of code until a condition is not met. However, for loops add support for a loop vari-able, which typically keeps track of the number of loop executions.
+A general format of the for loop is
+for (initialization; condition; loop operation)
+The initialization code executes before the for loop begins. The condition is tested at the beginning of each loop. If the condition is not met, the loop exits. The loop operation executes at the end of each loop.
+
+Maqnitude comparison
+So far, the examples have used beg and bne to perform equality or inequality comparisons and branches. MIPS provides the set less than instruction, slt, for magnitude comparison. slt sets rd to 1 when rs < rt. Otherwise, rd is 0.
+
+An array is organized as sequential data addresses in memory. Each array element is identified by a number called index. The number of elements in the array is called the size of the array. 
+
+Bytes & Characters
+Numbers in the range [-128, 127] can be stored in a single byte rather than an entire word. Because there are much fewer than 256 characters on an English language keyboard, English characters are often represented by bytes. The C language uses the type char to represent a byte or character.
+Early computers lacked a standard mapping between bytes and English characters, so exchanging text between computers was difficult.
+In 1963, the American Standards Association published the American Standard Code for Information Interchange (ASCII), which assigns each text character a unique byte value. Table 6.2 shows these character encodings for printable characters. The ASCII values are given in hexa-decimal. Lower-case and upper-case letters differ by 0x20 (32).
+MIPS provided load byte and store byte instructions to manipulate bytes or characters of data: load byte unsigned (lbu), load byte (lb), store byte (sb). 

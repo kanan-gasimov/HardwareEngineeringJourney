@@ -70,3 +70,45 @@ Example 6.15 Unconditional branching using jr
 0x0000200c sra $s1, $s1, 2        # not executed
 0x00002010 lw $s3, 44 ($s1)       # executed after jr instruction
 
+
+Example 6.6 LOOPS USING slt
+The following high-level code adds the powers of 2 from 1 to 100. Translate it into assembly language.
+//high-level code
+int sum = 0;
+for (i = 1; i < 101; i = j * 2)
+    sum = sum + i;
+
+Solution: The assembly language code uses the set less than (st) instruction to perform the less than comparison in the for loop.
+# MIPS assembly code
+# $S0 = i, $sl = sum
+  addi $s1, $0, 0       # sum = 0
+  addi $sO $0,1         # i = 1
+  addi $to, $0, 101     # $to = 101
+loop:
+  slt $t1, $s0, $t0     # if (i < 101) $t1 = 1, else $t1 = 0
+  beg $t1, $0, done     # if $t1 == 0 (i >= 101), branch to done
+  add $s1, $s1, $s0     # sum = sum + i
+  sll $sO, $sO, 1       # i = i * 2
+  j loop 
+done:
+
+
+Accessing array using for loop (memory holding array starting at base address 0x23B8F000)
+# $s0 = array base address, $s1 = i
+# initialization code
+  lui $sO, 0x23B8          # $s0 = 0x23B80000
+  ori $s0, $sO, 0xF000     # $s0 = 0x23B8F000
+  addi $s1, $0             # i = 0
+  addi $t2, $0, 1000       # $t2 = 1000
+
+loop:
+  slt $to, $s1, $t2        # i < 1000?
+  beq $to, $0, done        # if not then done
+  sll $to, $s1, 2          # $tO = i * 4 (byte offset)
+  add $to, $to, $s0        # address of array[i]
+  lw $t1, 0($to)           # $t1 = array[i]
+  sll $t1, $t1, 3          # $t1 = array[i] * 8
+  sw $t1, 0($to)           # array[i] = array[i] * 8
+  addi $s1, $s1, 1         # i = i + 1
+  j loop
+done:

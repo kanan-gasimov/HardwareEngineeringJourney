@@ -73,4 +73,81 @@ Conditional branching using bne
 target:
   add $s1, $s1, $s0     # $s1 = 1 + 4 = 5
 
+If statement
+# $s0 = f, $s1 = g, $s2 = h, $s3 = i, $s4 = j
+  bne $s0, $s4, L1      # if i != j, skip the block
+  add $s0, $s1, $s2     # if block: f = g + h
+L1:
+  sub $s0, $s0, $s3     # f = f - i
 
+
+If/Else statement
+# $s0 = f, $s1 = g, $s2 = h, $s3 = i, $s4 = j
+  bne $s0, $s4, else    # if i != j, branch to else
+  add $s0, $s1, $s2     # if block: f = g + h
+  j L2                  # skip past the else block
+else:
+  sub $s0, $s0, $s3     # else block : f = f - i
+L2:
+
+Ex 6.18 Switch/case statement
+# $s0 = amount, $s1 = fee
+case20:
+  addi $t0, $0, 20         # $t0 = 20
+  bne $s0, $t0, case 50    # i == 20? if not skip to case 50
+  addi $s1, $0, 2          # if yes, fee = 2
+  j done                   # and break out of case
+case50:
+  addi $t0, $0, 50         # $t0 = 50
+  bne $s0, $t0, case 100   # i == 50? if not skip to case 100
+  addi $s1, $0, 3          # if yes, fee = 3
+  j done                   # and break out of case
+case100: 
+  addi $t0, $0, 50         # $t0 = 100
+  bne $s0, $t0, default    # i == 100? if not skip to default
+  addi $s1, $0, 5          # if yes, fee = 5
+  j done                   # and break out of case
+default:
+  add $s1, $0, $0          # charge = 0
+done:
+
+
+While loop
+# $s0 = pow, $s1 = x
+  addi $s0, $0, 1     # pow = 1
+  addi $s1, $0, 0     # x = 0
+
+  addi $t0, $0, 128   # t0 = 128 for comparison
+while:
+  beq $s0, $t0, done    # if pow == 128, exit loop
+  sll $s0, $s0, 1       # pow = pow * 2
+  addi $s1, $s1, 1      # x = x + 1
+  j while               # jump back
+done:
+
+For loop
+# $s0 = i, $s1 = sum
+  add $s1, $0, 0        # sum = 0
+  addi $s0, $0, 0       # i = 0
+  addi $t0, $0, 10      # $t0 = 10
+for:
+  beq $s0, $t0, done    # if i == 10, branch to done
+  add $s1, $s1, $s0     # sum = sum + i
+  addi $s0, $s0, 1      # increment i
+  j for 
+done:
+
+
+Accessing array
+# $s0 = base address of array
+  lui $s0, 0x1000         # $s0 = 0x10000000
+  ori $s0, $s0, 0x7000    # $s0 = 0x10007000
+
+  lw $t1, 0($s0)          # $t1 = array[0]
+  sll $t1, $t1, 3         # $t1 = $t1 << 3 = $t1 * 8
+  sw $t1, 0($s0)          # array[0] = $t1
+
+  lw $t1, 4($s0)          # $t1 = array[1]
+  sll $t1, $t1, 3         # $t1 = $t1 << 3 = $t1 * 8
+  sw $t1, 4($s0)          # array[1] = $t1
+ 
